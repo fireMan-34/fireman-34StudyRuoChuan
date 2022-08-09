@@ -1,0 +1,19 @@
+{
+  "name": "36",
+  "version": "1.0.0",
+  "description": "这是我参与若川的源码共度会，这是36期",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ruochuan",
+    "fireman-34",
+    "fore-end"
+  ],
+  "author": "fireman-34",
+  "license": "ISC",
+  "dependencies": {
+    "omit.js": "^2.0.2"
+  }
+}
