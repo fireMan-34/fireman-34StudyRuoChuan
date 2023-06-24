@@ -13,6 +13,7 @@ const useIdle = (
   const [state, setState] = useState<boolean>(initialState);
 
   useEffect(() => {
+    /** 挂载标识符， 避免卸载后异步的函数继续执行逻辑 */
     let mounted = true;
     let timeout: any;
     let localState: boolean = state;
@@ -23,12 +24,14 @@ const useIdle = (
       }
     };
 
+    // 防抖避免函数高频创建异步函数
     const onEvent = throttle(50, () => {
       if (localState) {
         set(false);
       }
 
       clearTimeout(timeout);
+      // 无限轮询直到当前操作激活清楚对应的 effect
       timeout = setTimeout(() => set(true), ms);
     });
     const onVisibility = () => {

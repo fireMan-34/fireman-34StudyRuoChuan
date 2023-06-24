@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import { isBrowser, off, on } from './misc/util';
 
+/** 劫持 history 对象重新设置访问 */
 const patchHistoryMethod = (method) => {
+  /** 原对象 */
   const history = window.history;
+  /** 保留原方法引用 */
   const original = history[method];
 
   history[method] = function (state) {
     const result = original.apply(this, arguments);
+    /** 自定义对象 */
     const event = new Event(method.toLowerCase());
-
+    /**  */
     (event as any).state = state;
-
+    /** 自定义派发对象 */
     window.dispatchEvent(event);
 
     return result;
