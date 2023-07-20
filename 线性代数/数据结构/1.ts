@@ -13,6 +13,31 @@ const getDefaultMatrixItem: IGetMatrixValue = (value: number) => value;
 
 const defaultValue = (val: unknown, defaultVal: unknown) => val ?? defaultVal;
 
+/**
+ * 快速幂运算
+ * @param a 底数
+ * @param pow 阶乘
+ */
+const multiQuick = (a: number, pow: number) => {
+  let curPow = pow, result = 1;
+
+  while(curPow) {
+    if (curPow === 0) {
+      result *= 1;
+    } else if (curPow === 1) {
+      result *= a;
+      curPow = 0;
+    } else if (curPow % 2 === 1) {
+      result *= result * a;
+      curPow -= 1;
+    } else if (curPow % 2 === 0) {
+      result *= result;
+      curPow >>= 1;
+    }
+  };
+
+  return result;
+};
 
 /**
  * 二维矩阵 helper
@@ -143,8 +168,8 @@ class Matrix2Level {
 
     for (let i = 0; i < nexRowLen; i++) {
       nextMatrix[i] = [];
+      const curCol = this.getCol(matrix1, i);
       for (let j = 0; j < nexColLen; j++) {
-        const curCol = this.getCol(matrix1, i);
         const curRow = this.getRow(matrix2, j);
         const len = Math.max(curCol.length, curRow.length);
         const computed = Array.from({
@@ -160,6 +185,10 @@ class Matrix2Level {
     }
     
     return nextMatrix;
+  };
+
+  static multilpyQuiickMatrix(matrix: IMatrix<number>, pow: number) {
+    return this.mapMatralItem(matrix, (num) => multiQuick(num, pow))
   };
 
 };
@@ -205,4 +234,5 @@ console.log('矩阵map运算', Matrix2Level.mapMatralItem(matrix1, (num) => num 
 console.log('矩阵数乘', Matrix2Level.multipleItemMatrix(matrix1, 3));
 console.log('矩阵转秩', Matrix2Level.randConversionMatrix(matrix1));
 // 共轭复数 1 + 2i 在复平面的 1 - 2i
-console.log('矩阵乘法', Matrix2Level.multiplyMatrix(matrix4, matrix5), Matrix2Level.multiplyMatrix(matrix1, matrix4))
+console.log('矩阵乘法', Matrix2Level.multiplyMatrix(matrix4, matrix5), Matrix2Level.multiplyMatrix(matrix1, matrix4));
+console.log('矩阵快速幂', Matrix2Level.multilpyQuiickMatrix(matrix3, 9))
