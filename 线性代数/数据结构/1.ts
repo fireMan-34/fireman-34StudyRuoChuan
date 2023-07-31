@@ -39,6 +39,8 @@ const multiQuick = (a: number, pow: number) => {
   return result;
 };
 
+
+
 /**
  * 二维矩阵 helper
  * 开发关键词 原子性， 泛用性， 辅助实例
@@ -66,8 +68,7 @@ class Matrix2Level {
     if (matrix1.length !== matrix2.length) {
       return false;
     }
-    const maxRowLen = (matrix: IMatrix<T>) => Math.max(...matrix.map(row => row.length));
-    if (maxRowLen(matrix1) !== maxRowLen(matrix2)) {
+    if (this.getMatrixLen(matrix1) !== this.getMatrixLen(matrix2)) {
       return false;
     }
 
